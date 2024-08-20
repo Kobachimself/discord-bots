@@ -30,3 +30,4 @@ How It Works
 On startup, Snowy Extra syncs its commands with your server and starts monitoring loans.
 You can manage your Snowflakes, challenge friends, and even borrow money, all within the server!
 The bot logs all actions, helping you keep track of everything that's happening. 📝
+Thank you for using Snowy Bots! We hope these bots make your Discord server more fun and engaging. If you have any questions or need help, feel free to reach out! 😊
