@@ -30,7 +30,7 @@ async def setprefix(interaction: discord.Interaction, role: discord.Role, prefix
         if role in member.roles:
             nickname = f"{prefix} | {member.display_name}"
             await member.edit(nick=nickname)
-    await interaction.response.send_message(f"The prefix '{prefix}' has been set for all members with the role {role.mention}")
+    await interaction.response.send_message(f"The prefix '{prefix}' has been set for all members with the role {role.mention}.")
 
 @bot.tree.command(name="removeprefix", description="Remove a prefix from a role")
 @app_commands.describe(role="The role to remove the prefix from")
@@ -39,6 +39,6 @@ async def removeprefix(interaction: discord.Interaction, role: discord.Role):
     for member in guild.members:
         if role in member.roles and member.nick and member.nick.startswith(f"{role.name} |"):
             await member.edit(nick=None)
-    await interaction.response.send_message(f"The prefix has been removed for all members with the role {role.mention}")
+    await interaction.response.send_message(f"The prefix has been removed for all members with the role {role.mention}.")
 
-bot.run('11111111111111111111111111111111111111111111')
+bot.run('YOUR_BOT_TOKEN')
