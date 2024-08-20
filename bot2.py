@@ -5,8 +5,10 @@ import json
 import random
 import os
 import logging
-# Use double backslashes `\\` or raw string `r` to avoid escape sequences issues
+
+# Setup SSL certificate path (Windows specific)
 os.environ['SSL_CERT_FILE'] = r'C:\Users\horisont1\Desktop\coding\cacert.pem'
+
 # Enable logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -14,12 +16,12 @@ logger = logging.getLogger(__name__)
 # Enable all intents
 intents = discord.Intents.all()
 
-# Initialize bot with all intents
+# Initialize the bot
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 # Constants
 SUPPORT_CATEGORY_ID = 1275234841331367997  # Replace with your support category ID
-CLOSED_CATEGORY_ID = 1271828303845799999    # Replace with your closed tickets category ID
+CLOSED_CATEGORY_ID = 1271828303845799999   # Replace with your closed tickets category ID
 SUPPORT_ROLE_IDS = [1268321134139412665, 1268321261516488744, 1269100504080711781, 1268319677977858213]
 SUPPORT_MESSAGE_ID = None  # To be set by the /setsupport command
 
@@ -31,7 +33,7 @@ if not os.path.exists(USER_DATA_FILE):
     with open(USER_DATA_FILE, 'w') as f:
         json.dump({}, f)
 
-# Function to get or create a user's economy entry
+# Functions to handle user data
 def get_or_create_user(user_id):
     with open(USER_DATA_FILE, 'r') as f:
         data = json.load(f)
@@ -48,7 +50,6 @@ def get_or_create_user(user_id):
     
     return data[str(user_id)]
 
-# Function to update a user's data
 def update_user(user_id, user_data):
     with open(USER_DATA_FILE, 'r') as f:
         data = json.load(f)
@@ -58,7 +59,7 @@ def update_user(user_id, user_data):
     with open(USER_DATA_FILE, 'w') as f:
         json.dump(data, f)
 
-# Economy Commands
+# Economy commands
 @bot.tree.command(name="balance", description="Check your balance")
 async def balance(interaction: discord.Interaction):
     user = get_or_create_user(interaction.user.id)
@@ -157,6 +158,7 @@ async def loan(interaction: discord.Interaction, amount: int):
         update_user(interaction.user.id, user)
         await interaction.response.send_message(f"You took a loan of {amount} Snowflakes. You have 7 days to repay it.")
 
+# Task to check loans periodically
 @tasks.loop(minutes=1)
 async def check_loans():
     with open(USER_DATA_FILE, 'r') as f:
@@ -164,7 +166,7 @@ async def check_loans():
     
     for user_id, user_data in data.items():
         # Logic for checking overdue loans and updating user data
-        # For now, we're just printing a reminder
+        # For now, we're just logging a reminder
         if user_data['loans'] > 0:
             logger.debug(f"User {user_id} has a loan of {user_data['loans']} Snowflakes.")
             # Example action: deduct the loan amount from balance
@@ -172,7 +174,7 @@ async def check_loans():
             # user_data['loans'] = 0
             # update_user(user_id, user_data)
 
-
+# Bot events
 @bot.event
 async def on_ready():
     logger.debug(f'Logged in as {bot.user.name}')
@@ -183,4 +185,6 @@ async def on_ready():
         check_loans.start()  # Start the check_loans task here
     except Exception as e:
         logger.error(f"Failed to sync commands: {e}")
+
+# Run the bot
 bot.run('11111111111111111111111111111111111111111111111')
