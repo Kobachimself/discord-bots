@@ -2,6 +2,7 @@
 Welcome to the Snowy Bots repository! Here, you will find two Discord bots designed to enhance your server with some cool functionalities. Whether you want to manage roles or engage in fun economy-based interactions, these bots have you covered. Let's dive into what each bot does! 👇
 
 ❄️ Snowy Lite Bot
+
 The Snowy Lite bot is your go-to for simple and effective role management. Here's what it can do:
 
 Features
@@ -11,7 +12,9 @@ Prefix Management:
 How It Works
 When the bot is online, it will automatically sync with your server to ensure all commands are ready to use.
 You can set or remove prefixes for any role, and the bot will update the nicknames of all members with that role.
+
 🌟 Snowy Extra Bot
+
 Snowy Extra is the powerhouse bot with an integrated economy system. Whether you want to play, manage your virtual wealth, or challenge friends, this bot is packed with features!
 
 Features
