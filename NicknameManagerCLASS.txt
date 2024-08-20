@@ -1,0 +1,13 @@
+class NicknameManager:
+    @staticmethod
+    async def set_prefix_for_role(guild, role, prefix):
+        for member in guild.members:
+            if role in member.roles:
+                nickname = f"{prefix} | {member.display_name}"
+                await member.edit(nick=nickname)
+
+    @staticmethod
+    async def remove_prefix_from_role(guild, role):
+        for member in guild.members:
+            if role in member.roles and member.nick and member.nick.startswith(f"{role.name} |"):
+                await member.edit(nick=None)
